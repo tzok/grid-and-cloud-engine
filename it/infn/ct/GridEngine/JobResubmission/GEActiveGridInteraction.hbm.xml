@@ -1,0 +1,66 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="it.infn.ct.GridEngine.JobResubmission.GEActiveGridInteraction" table="ActiveGridInteractions" catalog="userstracking">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="commonName" type="string">
+            <column name="common_name" length="100" not-null="false" unique="true" />
+        </property>
+        <property name="tcpAddress" type="string">
+            <column name="tcp_address" length="20" not-null="false" unique="false" />
+        </property>
+        <property name="timestamp" type="timestamp">
+            <column name="timestamp" not-null="false" unique="false"/>
+        </property>
+        <property name="gridInteraction" type="int">
+            <column name="grid_interaction" />
+        </property>
+        <property name="jobId" type="string">
+            <column name="grid_id" length="1000" not-null="false" unique="false" />
+        </property>
+        <property name="robotCertificate" type="string">
+            <column name="robot_certificate" length="150" not-null="false" unique="false" />
+        </property>
+        <property name="proxyId" type="string">
+            <column name="proxy_id" length="50" not-null="false" unique="false" />
+        </property>
+        <property name="VO" type="string">
+            <column name="virtual_organization" length="50" not-null="false" unique="false" />
+        </property>
+        <property name="fqan" type="string">
+            <column name="fqan" length="300" not-null="false" unique="false" />
+        </property>
+        <property name="userDescription" type="string">
+            <column name="user_description" length="300" not-null="false" unique="false" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="20" not-null="true" unique="false" />
+        </property>
+        <property name="CE" type="string">
+            <column name="grid_ce" length="50" not-null="true" unique="false" />
+        </property>
+        <property name="latitude" type="float">
+            <column name="latitude" />
+        </property>
+        <property name="longitude" type="float">
+            <column name="longitude" />
+        </property>
+        <property name="timestampEndJob" type="timestamp">
+            <column name="timestamp_endjob" not-null="false" unique="false"/>
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" not-null="false" unique="false"/>
+        </property>
+        <property name="eTokenServer" type="string">
+            <column name="e_token_server" length="100" not-null="false" unique="false"/>
+        </property>
+        <property name="idJobCollection" type="java.lang.Integer">
+            <column name="id_job_collection" />
+        </property>
+    </class>
+</hibernate-mapping>

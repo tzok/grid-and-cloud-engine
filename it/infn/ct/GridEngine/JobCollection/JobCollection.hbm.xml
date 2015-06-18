@@ -1,0 +1,58 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="it.infn.ct.GridEngine.JobCollection.JobCollection"
+		table="ActiveJobCollections" catalog="userstracking"
+		discriminator-value="JOB_COLLECTION">
+
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+
+		<discriminator column="collection_type" type="string" />
+
+		<property name="commonName" type="string">
+			<column name="common_name" length="100" not-null="false" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="100" not-null="false" />
+		</property>
+		<property name="taskCounter" type="int">
+			<column name="task_counter" />
+		</property>
+		<property name="userEmail" type="string">
+			<column name="user_email" length="100" not-null="false" />
+		</property>
+		<property name="startTimestamp" type="timestamp">
+			<column name="start_timestamp" not-null="false" />
+		</property>
+		<property name="collectionStatus" type="string">
+			<column name="status" length="100" not-null="false" />
+		</property>
+		<property name="endTimestamp" type="timestamp">
+			<column name="end_timestamp" not-null="false" />
+		</property>
+		<!-- property name="collectionType" type="string"> <column name="collection_type" 
+			length="20" not-null="true" /> </property -->
+		<property name="outputPath" type="string">
+			<column name="output_path" length="100" not-null="false" />
+		</property>
+
+		<subclass name="it.infn.ct.GridEngine.JobCollection.WorkflowN1"
+			extends="it.infn.ct.GridEngine.JobCollection.JobCollection"
+			discriminator-value="WORKFLOW_N1">
+			<property name="idFinalJob" type="java.lang.Long">
+				<column name="id_final_job" />
+			</property>
+		</subclass>
+		
+		<subclass name="it.infn.ct.GridEngine.JobCollection.JobParametric"
+			extends="it.infn.ct.GridEngine.JobCollection.JobCollection"
+			discriminator-value="JOB_PARAMETRIC">
+		</subclass>
+
+	</class>
+</hibernate-mapping>
