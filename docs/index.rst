@@ -58,27 +58,205 @@ Installation
 
 To install the Catania Grid & Cloud Engine first of all you have to create the Usertracking database where users interactions will be stored.
 
-1. Download the SQL scripts from `here <https://raw.githubusercontent.com/csgf/grid-and-cloud-engine/master/UsersTrackingDB/UsersTrackingDB.sql>`_ and performs the following command:
+1. Create the userstracking database using the following commnad:
+
+.. code:: bash
+    
+    mysql -u root -p 
+    
+.. code:: sql
+
+    mysql> CREATE DATABASE userstracking;
+
+
+2. Download the SQL scripts from `here <https://raw.githubusercontent.com/csgf/grid-and-cloud-engine/master/UsersTrackingDB/UsersTrackingDB.sql>`_ and performs the following command to create the empty schema:
 
 .. code:: bash
     
     mysql -u root -p < UsersTrackingDB.sql
 
-2. Download Grid Engine and JSAGA libraries from `this link <http://sourceforge.net/projects/ctsciencegtwys/files/catania-grid-engine/1.5.9/Liferay6.1/GridEngine_v1.5.9.zip>`_.
+Then you need to download and configure the Catania Grid & Cloud Engine dependencies. 
 
-3. Unzip the GridEngine_v1.5.9.zip:
+1. Download the GridEngine_v1.5.9.zip from `this link <http://sourceforge.net/projects/ctsciencegtwys/files/catania-grid-engine/1.5.9/Liferay6.1/GridEngine_v1.5.9.zip>`_
+
+2. Unzip the GridEngine_v1.5.9.zip
 
 .. code:: bash
 
     unzip GridEngine_v1.5.9.zip
 
-4. Copy the extracted lib dependencies folder under the application server /lib folder:
+3. Copy the extracted lib folder under the application server /lib folder:
 
 .. code:: bash
 
     cp -r lib /opt/glassfish3/glassfish/domains/liferay/lib/
 
+4. Download the attached GridEngineLogConfig.xml (link), and move this file to the Liferay config folder:
 
+.. code:: bash
+    
+    mv GridEngineLogConfig.xml \ 
+    /opt/glassfish3/glassfish/domains/liferay/config
+    
+5. Restart Glassfish server
+
+.. code:: bash
+  
+    /opt/glassfish3/bin asadmin-stop liferay     
+    /opt/glassfish3/bin asadmin-start liferay
+    
+When the start process ends load the Glassfish Web Administration Console: http://sg-server:4848, fill with username liferayadmin and the password you set for the glassfish administrator and create the required resources. 
+
+JNDI Resources
+--------------
+
+Select `Resources -> JNDI -> Custom Resources` from left panel. Then on the right panel you can create the resources by clicking the **New...** button.
+
+1. Create **GridEngine-CheckStatusPool** with the following parameters (`Figure 2`_):
+    - **JNDI Name**: GridEngine-CheckStatusPool;
+    - **Resource Type**: it.infn.ct.ThreadPool.CheckJobStatusThreadPoolExecutor
+    - **Factory Class**: it.infn.ct.ThreadPool.CheckJobStatusThreadPoolExecutorFactory
+    - **Additional Properties**:
+        - **corePoolSize**: 50
+        - **maximumPoolSize**: 100
+        - **keepAliveTime**: 4
+        - **timeUnit**: MINUTES
+        - **allowCoreThreadTimeOut**: true
+        - **prestartAllCoreThreads**: true
+
+.. _Figure 2:
+
+.. figure:: images/GridEngine-CheckStatusPool.png
+   :align: center
+   :alt: GridEngine-CheckStatusPool
+   :scale: 80%
+   :figclass: text    
+   
+   Figure 2. GridEngine-CheckStatusPool JNDI Resource
+   
+
+2. Create **GridEngine-Pool** with the following parameters `Figure 3`_):
+    - **JNDI Name**: GridEngine-Pool;
+    - **Resource Type**: it.infn.ct.ThreadPool.ThreadPoolExecutor
+    - **Factory Class**: it.infn.ct.ThreadPool.ThreadPoolExecutorFactory
+    - **Additional Properties**:
+        - **corePoolSize**: 50
+        - **maximumPoolSize**: 100
+        - **keepAliveTime**: 4
+        - **timeUnit**: MINUTES
+        - **allowCoreThreadTimeOut**: true
+        - **prestartAllCoreThreads**: true
+
+.. _Figure 3:
+
+.. figure:: images/GridEngine-Pool.png
+   :align: center
+   :alt: GridEngine-Pool
+   :scale: 80%
+   :figclass: text    
+   
+   Figure 3. GridEngine-Pooll JNDI Resource
+   
+3. Create **JobCheckStatusService** with the following parameters (`Figure 4`_):
+    - **JNDI Name**: JobCheckStatusService;
+    - **Resource Type**: it.infn.ct.GridEngine.JobService.JobCheckStatusService
+    - **Factory Class**: it.infn.ct.GridEngine.JobService.JobCheckStatusServiceFactory
+    - **Additional Properties**:
+        - **jobsupdatinginterval**: 900
+
+.. _Figure 4:
+
+.. figure:: images/JobCheckStatusService.png
+   :align: center
+   :alt: JobCheckStatusService
+   :scale: 80%
+   :figclass: text    
+   
+   Figure 4. JobCheckStatusService JNDI Resource
+
+4. Create **JobServices-Dispatcher** with the following parameters:
+    - **JNDI Name**: JobServices-Dispatcher;
+    - **Resource Type**: it.infn.ct.GridEngine.JobService.JobServicesDispatcher
+    - **Factory Class**: it.infn.ct.GridEngine.JobService.JobServicesDispatcherFactory
+    - **Additional Properties**:
+        - **retrycount**: 3;
+        - **resubnumber**: 10;
+        - **myproxyservers**: gridit=myproxy.ct.infn.it; prod.vo.eu-eela.eu=myproxy.ct.infn.it; cometa=myproxy.ct.infn.it; eumed=myproxy.ct.infn.it; vo.eu-decide.eu=myproxy.ct.infn.it; sagrid=myproxy.ct.infn.it; euindia=myproxy.ct.infn.it; see=myproxy.ct.infn.it;
+
+.. _Figure 5:
+
+.. figure:: images/JobServices-Dispatcher.png
+   :align: center
+   :alt: JobServices-Dispatcher
+   :scale: 80%
+   :figclass: text    
+   
+   Figure 5. JobServices-Dispatcher JNDI Resource
+
+Now you have to create the required JDBC Connection Pools. Select `Resources -> JDBC -> JDBC Connection Pools` from left panel. On the right panel you can create the resources by clicking the **New...** button.
+
+- Create **UserTrackingPool** with the following parameters:
+    - General Settings (Step 1/2) see `Figure 6`_:
+        - **Pool Name**: usertrackingPool
+        - **Resource Type**: select javax.sql.DataSource
+        - **Database Driver Vendor**: select MySql
+        - Click Next
+    - Advanced Settings (Step 2/2) `Figure 7`_:
+       - Edit the default parameters in **Pool Settings** using the following values:
+            - **Initial and Minimum Pool Size**: 64
+            - **Maximum Pool Size**: 256
+       - Select all default Additional properties and delete them
+            - Add the following properties:
+            
+        =====  =====
+        Name   Value
+        =====  =====
+        Url    jdbc:mysql://`sg-database`:3306/userstracking
+        USer   tracking_user
+        False  usertracking
+        =====  =====
+       
+       - Click Save
+
+Please pay attention to the Url property, **sg-database** should be replaced with the correct Url of your database machine.
+You can check if you have correctly configured the Connection Pool by clicking on Ping button,  you should see the message **Ping Succeded**, otherwise please check your configuration.
+
+.. _Figure 6:
+
+.. figure:: images/UsersTrackingPool.png
+   :align: center
+   :alt: JobServices-Dispatcher
+   :scale: 80%
+   :figclass: text    
+   
+   Figure 6. UsersTrackingPool JDBC General settings
+   
+.. _Figure 7:
+
+.. figure:: images/UsersTrackingPool_AP.png
+   :align: center
+   :alt: UsersTrackingPool_AP
+   :scale: 80%
+   :figclass: text    
+   
+   Figure 7. UsersTrackingPool JDBC Advanced settings
+
+Select Resources -> JDBC -> JDBC Resources from left panel. On the right panel you can create the resources by clicking the New... button.
+
+* Create **jdbc/UserTrackingPool** with the following parameter:
+    * **JNDI Name**: jdbc/UserTrackingPool;
+    * **Pool name**: select usertrackingPool.
+
+[[img src=jdbcUsersTrackingPool.png alt=foobar]]
+
+* Create **jdbc/gehibernatepool** with the following parameter:
+    * **JNDI Name**: jdbc/gehibernatepool;
+    * **Pool name**: select usertrackingPool.
+
+[[img src=jdbcgehibernatepool.png alt=foobar]]
+ 
+Restart glassfish to save the resources.
+    
 ============
 Usage
 ============
