@@ -15,18 +15,16 @@ The **Catania Grid & Cloud Engine** is a standard based middleware independent J
 
 The Catania Grid & Cloud Engine provides a standard way to interact with different DCI middlewares, so the developers can develop their applications without worrying about the details of the infrastructures where those applications will be performed.
 
-
 The `Figure 1`_ shows the Catania Grid & Cloud Engine architecture, that consists of:
 
 * two interfaces:    
     - **Science GW interface**: towards the applications;
     - **DCI interface**: towards the DCI middlwares based on the SAGA Standard;
 
-* three modules
-
-    - **Job Engine Module**:
-    - **Data Engine Module**:
-    - **User Track & Monitoring Module**:
+* three modules:
+    - **Job Engine Module**: to manage jobs;
+    - **Data Engine Module**: to move data towards/from the DCIs
+    - **User Track & Monitoring Module**: stores the information about the users interactions in the  usertracking database.
     
 .. _Figure 1:
 
@@ -37,6 +35,8 @@ The `Figure 1`_ shows the Catania Grid & Cloud Engine architecture, that consist
    :figclass: text    
    
    Figure 1. Catania Grid & Cloud Engine Architecture
+   
+
 
 ============
 Installation
