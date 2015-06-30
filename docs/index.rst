@@ -8,8 +8,10 @@ About
 
 .. image:: images/logo.png
    :align: left
-   :scale: 90%
+   :scale: 70%
    :target: https://github.com/csgf/grid-and-cloud-engine
+
+-------------
 
 The **Catania Grid & Cloud Engine** is a standard based middleware independent JAVA library that provides several APIs to submit and manage jobs on *Distributed Computer Infrastructures* (DCI). It is compliant with the **Open Grid Forum** (`OGF <https://www.ogf.org/>`_) **Simple API for Grid Applications** (`SAGA <https://www.ogf.org/documents/GFD.90.pdf>`_) standard. 
 
@@ -34,7 +36,7 @@ The `Figure 1`_ shows the Catania Grid & Cloud Engine architecture, that consist
    :scale: 60%
    :figclass: text    
    
-   Figure 1. Catania Grid & Cloud Engine Architecture
+   Catania Grid & Cloud Engine Architecture
    
 Job Engine 
 ----------
@@ -132,7 +134,7 @@ Select `Resources -> JNDI -> Custom Resources` from left panel. Then on the righ
    :scale: 80%
    :figclass: text    
    
-   Figure 2. GridEngine-CheckStatusPool JNDI Resource
+   GridEngine-CheckStatusPool JNDI Resource
    
 
 2. Create **GridEngine-Pool** with the following parameters `Figure 3`_):
@@ -155,7 +157,7 @@ Select `Resources -> JNDI -> Custom Resources` from left panel. Then on the righ
    :scale: 80%
    :figclass: text    
    
-   Figure 3. GridEngine-Pooll JNDI Resource
+   GridEngine-Pooll JNDI Resource
    
 3. Create **JobCheckStatusService** with the following parameters (`Figure 4`_):
     - **JNDI Name**: JobCheckStatusService;
@@ -172,7 +174,7 @@ Select `Resources -> JNDI -> Custom Resources` from left panel. Then on the righ
    :scale: 80%
    :figclass: text    
    
-   Figure 4. JobCheckStatusService JNDI Resource
+   JobCheckStatusService JNDI Resource
 
 4. Create **JobServices-Dispatcher** with the following parameters:
     - **JNDI Name**: JobServices-Dispatcher;
@@ -191,7 +193,7 @@ Select `Resources -> JNDI -> Custom Resources` from left panel. Then on the righ
    :scale: 80%
    :figclass: text    
    
-   Figure 5. JobServices-Dispatcher JNDI Resource
+   JobServices-Dispatcher JNDI Resource
 
 Now you have to create the required JDBC Connection Pools. Select `Resources -> JDBC -> JDBC Connection Pools` from left panel. On the right panel you can create the resources by clicking the **New...** button.
 
@@ -212,7 +214,7 @@ Now you have to create the required JDBC Connection Pools. Select `Resources -> 
         Name   Value
         =====  =====
         Url    jdbc:mysql://`sg-database`:3306/userstracking
-        USer   tracking_user
+        User   tracking_user
         False  usertracking
         =====  =====
        
@@ -229,7 +231,7 @@ You can check if you have correctly configured the Connection Pool by clicking o
    :scale: 80%
    :figclass: text    
    
-   Figure 6. UsersTrackingPool JDBC General settings
+   UsersTrackingPool JDBC General settings
    
 .. _Figure 7:
 
@@ -239,32 +241,49 @@ You can check if you have correctly configured the Connection Pool by clicking o
    :scale: 80%
    :figclass: text    
    
-   Figure 7. UsersTrackingPool JDBC Advanced settings
+   UsersTrackingPool JDBC Advanced settings
 
-Select Resources -> JDBC -> JDBC Resources from left panel. On the right panel you can create the resources by clicking the New... button.
+Finally, you have to create the required JDBC Resources. Select `Resources -> JDBC -> JDBC Resources` from left panel. On the right panel you can create the resources by clicking the **New...** button.
 
-* Create **jdbc/UserTrackingPool** with the following parameter:
-    * **JNDI Name**: jdbc/UserTrackingPool;
-    * **Pool name**: select usertrackingPool.
+- Create **jdbc/UserTrackingPool** with the following parameter (`Figure 8`_):
+    - **JNDI Name**: jdbc/UserTrackingPool;
+    - **Pool name**: select usertrackingPool.
 
-[[img src=jdbcUsersTrackingPool.png alt=foobar]]
+.. _Figure 8:
 
-* Create **jdbc/gehibernatepool** with the following parameter:
-    * **JNDI Name**: jdbc/gehibernatepool;
-    * **Pool name**: select usertrackingPool.
+.. figure:: images/jdbcUsersTrackingPool.png
+   :align: center
+   :alt: jdbcUsersTrackingPool
+   :scale: 90%
+   :figclass: text    
+   
+   jdbcUsersTrackingPool JDBC Resource
 
-[[img src=jdbcgehibernatepool.png alt=foobar]]
- 
-Restart glassfish to save the resources.
+- Create **jdbc/gehibernatepool** with the following parameter `Figure 9`_:
+    - **JNDI Name**: jdbc/gehibernatepool;
+    - **Pool name**: select usertrackingPool.
+
+.. _Figure 9:
+
+.. figure:: images/jdbcgehibernatepool.png
+   :align: center
+   :alt: jdbcgehibernatepool
+   :scale: 88%
+   :figclass: text    
+   
+   jdbcgehibernatepool JDBC Resource
+
+Now, restart glassfish to save the resources.
     
 ============
 Usage
 ============
 
+Once you have successfully installed and configured the Catania Grid & Cloud Engine, to exploit all its features you could download and deploy one of ours portlets available on the `GitHub csgf repository <https://github.com/csgf>`_. As an example you could referer to the `mi-hostname-portlet <https://github.com/csgf/mi-hostname-portlet>`_ to get info in how to install and use this portlet. 
 
-============
-References
-============
+.. ============
+.. References
+.. ============
 
 
 ============
