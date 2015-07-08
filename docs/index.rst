@@ -79,7 +79,7 @@ To install the Catania Grid & Cloud Engine first of all you have to create the U
 
 Then you need to download and configure the Catania Grid & Cloud Engine dependencies. 
 
-1. Download the GridEngine_v1.5.9.zip from `this link <http://sourceforge.net/projects/ctsciencegtwys/files/catania-grid-engine/1.5.9/Liferay6.1/GridEngine_v1.5.9.zip>`_
+1. Download the GridEngine_v1.5.10.zip from `this link <http://grid.ct.infn.it/csgf/binaries/GridEngine_v1.5.10.zip>`_
 
 2. Unzip the GridEngine_v1.5.9.zip
 
