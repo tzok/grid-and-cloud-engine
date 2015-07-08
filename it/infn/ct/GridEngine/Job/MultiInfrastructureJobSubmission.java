@@ -501,12 +501,12 @@ public class MultiInfrastructureJobSubmission {
 		return (this.userEmail.contains("|")) ? this.userEmail.substring(0, this.userEmail.indexOf('|')) : this.userEmail;
 	}
 	
-	private JSagaJobSubmission createJobSubmissionObject() {
+	private JSagaJobSubmission createJobSubmissionObject(String commonName) {
 		InfrastructureInfo infrastructure = getInfrastructure();
-		return createJobSubmissionObject(infrastructure);
+		return createJobSubmissionObject(commonName, infrastructure);
 	}
 	
-	private JSagaJobSubmission createJobSubmissionObject(InfrastructureInfo infrastructure) {
+	private JSagaJobSubmission createJobSubmissionObject(String commonName, InfrastructureInfo infrastructure) {
 		//InfrastructureInfo infrastructure = getInfrastructure();
 		JSagaJobSubmission jobSubmission = null;
 		
@@ -529,7 +529,7 @@ public class MultiInfrastructureJobSubmission {
 		
 		if ( (infrastructure.getMiddleware().equals("glite")) || (infrastructure.getMiddleware().equals("wsgram")) || (infrastructure.getMiddleware().equals("rocci")) ) {
 			if (infrastructure.getUserProxy().equals(""))
-				jobSubmission.useRobotProxy(infrastructure.getETokenServer(), infrastructure.getETokenServerPort(), infrastructure.getProxyId(), infrastructure.getVO(), infrastructure.getFQAN(), true, infrastructure.getRFC());
+				jobSubmission.useRobotProxy(infrastructure.getETokenServer(), infrastructure.getETokenServerPort(), infrastructure.getProxyId(), infrastructure.getVO(), infrastructure.getFQAN(), true, infrastructure.getRFC(), commonName);
 			else
 				jobSubmission.setUserProxy(infrastructure.getUserProxy());
 		}
@@ -624,71 +624,15 @@ public class MultiInfrastructureJobSubmission {
 				jobSubmission.setJDLRequirements(requirements);
 			}
 		}
-//		else {
-//			if (!(executable.equals("")))
-//				jobSubmission.setExecutable(executable);
-//
-//			if (!(arguments.equals("")))
-//				jobSubmission.setArguments(arguments);
-//		}
-//		
-//		if (!(jobQueue.equals("")))
-//			jobSubmission.setJobQueue(jobQueue);
-//		
-//		if (!(outputPath.equals("")))
-//			jobSubmission.setOutputPath(outputPath);
-//		
-//		if (!(jobOutput.equals("")))
-//			jobSubmission.setJobOutput(jobOutput);
-//		
-//		if (!(jobError.equals("")))
-//			jobSubmission.setJobError(jobError);
-//		
-//		if (!(jobError.equals("")))
-//			jobSubmission.setJobError(jobError);
-//		
-//		if (!(inputFiles.equals("")))
-//			jobSubmission.setInputFiles(inputFiles);
-//		
-//		if (!(outputFiles.equals("")))
-//			jobSubmission.setOutputFiles(outputFiles);
-//		
-//		if (!(totalCPUCount.equals("")))
-//			jobSubmission.setTotalCPUCount(totalCPUCount);
-//		
-//		if (!(SPMDVariation.equals("")))
-//			jobSubmission.setSPMDVariation(SPMDVariation);
-//		
-//		if (!(NumberOfProcesses.equals("")))
-//			jobSubmission.setNumberOfProcesses(NumberOfProcesses);
-//		
-//		if (infrastructure.getMiddleware().equals("glite")) {
-//			if (infrastructure.getSWTag().equals("")) {
-//				if (JDLRequirements!=null)
-//					jobSubmission.setJDLRequirements(JDLRequirements);
-//			}
-//			else {
-//				//Member("VO-prod.vo.eu-eela.eu-OCTAVE-3.2.4",other.GlueHostApplicationSoftwareRunTimeEnvironment);
-//				String requirements[] = null;
-//				if (JDLRequirements!=null) {
-//					requirements = new String[JDLRequirements.length+1];
-//					requirements[0] = "JDLRequirements=(Member(\""+infrastructure.getSWTag()+"\", other.GlueHostApplicationSoftwareRunTimeEnvironment))";
-//					for (int i=0;i<JDLRequirements.length;i++)
-//						requirements[i+1] = JDLRequirements[i];
-//				}
-//				else {
-//					requirements = new String[1];
-//					requirements[0] = "JDLRequirements=(Member(\""+infrastructure.getSWTag()+"\", other.GlueHostApplicationSoftwareRunTimeEnvironment))";
-//				}
-//				jobSubmission.setJDLRequirements(requirements);
-//			}
-//		}
+
+		if(!userEmail.equals(""))
+			jobSubmission.setUserEmail(userEmail);
 		
 		return jobSubmission;
 	}
 	
 	public JobId submitJob(String commonName, String tcpAddress, int GridInteractionId, String userDescription) {
-		JSagaJobSubmission jobSubmission= createJobSubmissionObject();
+		JSagaJobSubmission jobSubmission= createJobSubmissionObject(commonName);
 		if (!checkJobsStatus) jobSubmission.setCheckJobsStatus(false);
 		if (randomCE) jobSubmission.setRandomCE(true);
 
@@ -696,7 +640,7 @@ public class MultiInfrastructureJobSubmission {
 	}
 	
 	public void submitJobAsync(String commonName, String tcpAddress, int GridInteractionId, String userDescription) {
-		JSagaJobSubmission jobSubmission= createJobSubmissionObject();
+		JSagaJobSubmission jobSubmission= createJobSubmissionObject(commonName);
 		if (!checkJobsStatus) jobSubmission.setCheckJobsStatus(false);
 		if (randomCE) jobSubmission.setRandomCE(true);
 
@@ -704,7 +648,7 @@ public class MultiInfrastructureJobSubmission {
 	}
 	
 	public JobId submitJob(InfrastructureInfo infrastructure, String commonName, String tcpAddress, int GridInteractionId, String userDescription) {
-		JSagaJobSubmission jobSubmission= createJobSubmissionObject(infrastructure);
+		JSagaJobSubmission jobSubmission= createJobSubmissionObject(commonName, infrastructure);
 		if (!checkJobsStatus) jobSubmission.setCheckJobsStatus(false);
 		if (randomCE) jobSubmission.setRandomCE(true);
 
@@ -722,15 +666,10 @@ public class MultiInfrastructureJobSubmission {
 	 * @param userDescription a description for this job.
 	 */
 	public void submitJobAsync(InfrastructureInfo infrastructure, String commonName, String tcpAddress, int GridInteractionId, String userDescription) {
-		JSagaJobSubmission jobSubmission= createJobSubmissionObject(infrastructure);
+		JSagaJobSubmission jobSubmission= createJobSubmissionObject(commonName, infrastructure);
 		if (!checkJobsStatus) jobSubmission.setCheckJobsStatus(false);
 		if (randomCE) jobSubmission.setRandomCE(true);
-		
-		//***************MARIO*****************
-		if(!userEmail.equals(""))
-			jobSubmission.setUserEmail(userEmail);
-		//*************************************
-		
+				
 		jobSubmission.submitJobAsync(commonName, tcpAddress, GridInteractionId, userDescription);
 	}
 
@@ -768,7 +707,7 @@ public class MultiInfrastructureJobSubmission {
 //		infrastructures[0] = new InfrastructureInfo("SEEGRID",wmsListSEEGRID, "212.189.145.106","8082","bc681e2bd4c3ace2a4c54907ea0c379b","see","see",CEsSEE);
 //		infrastructures[0] = new InfrastructureInfo("SEEGRID","ldap://bdii.hellasgrid.gr:2170", wmsListSEEGRID, "etokenserver.ct.infn.it","8082","bc681e2bd4c3ace2a4c54907ea0c379b","see","see", true, "VO-see-GROMACS-4.6.5-sl6-x86_64-gccany, VO-see-GROMACS-4.6.5-sl5-x86_64-gccany");
 //		String wmsList[] = {"wms://srvslngrd010.uct.ac.za:7443"};
-		//infrastructures[0] = new InfrastructureInfo("gridit","ldap://egee-bdii.cnaf.infn.it:2170", wmsList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","gridit","gridit",true);
+//		infrastructures[0] = new InfrastructureInfo("gridit","ldap://egee-bdii.cnaf.infn.it:2170", wmsList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","gridit","gridit", "PROVA",false);
 		
 
 //		infrastructures[0] = new InfrastructureInfo("gridit 0", wmsList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","gridit","gridit", CEs);
@@ -777,7 +716,7 @@ public class MultiInfrastructureJobSubmission {
 //		infrastructures[2] = new InfrastructureInfo("gridit 2", wmsList, "/tmp/proxy","",CEs);
 		//String wmsListGARUDA[] = {"wsgram://xn03.ctsf.cdacb.in:8443/GW"};
 		String wmsListGARUDA[] = {"gatekeeper://xn03.ctsf.cdacb.in:2119/jobmanager-gw"};
-//		infrastructures[1] = new InfrastructureInfo("GARUDA","", wmsListGARUDA, "/home/mario/x509up_u500", "");
+		infrastructures[1] = new InfrastructureInfo("GARUDA","", wmsListGARUDA, "/home/mario/x509up_u500", "");
 		//infrastructures[1] = new InfrastructureInfo("GARUDA","wsgram","", wmsListGARUDA, "etokenserver.ct.infn.it","8082","332576f78a4fe70a52048043e90cd11f","gridit","gridit");
 		String sshList[] = {"ssh://api.ct.infn.it"};
 //		String sshList[] = {"ssh://gilda-liferay-vm-06.ct.infn.it:5000"};
@@ -897,8 +836,8 @@ public class MultiInfrastructureJobSubmission {
 //				multiInfrastructureJobSubmission.setRandomCE(true);
 				
 				//***************MARIO*****************
-//				multiInfrastructureJobSubmission.setUserEmail("mario.torrisi@ct.infn.it");
-//				multiInfrastructureJobSubmission.setSenderEmail("mario.torrisi@ct.infn.it");
+				multiInfrastructureJobSubmission.setUserEmail("mario.torrisi@ct.infn.it");
+				multiInfrastructureJobSubmission.setSenderEmail("mario.torrisi@ct.infn.it");
 				//multiInfrastructureJobSubmission.setSPMDVariation("");
 				//multiInfrastructureJobSubmission.setNumberOfProcesses("");
 				//*************************************

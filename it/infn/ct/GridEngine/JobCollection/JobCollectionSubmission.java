@@ -173,7 +173,7 @@ public class JobCollectionSubmission {
 				jobSubmission.useRobotProxy(infrastructure.getETokenServer(),
 						infrastructure.getETokenServerPort(),
 						infrastructure.getProxyId(), infrastructure.getVO(),
-						infrastructure.getFQAN(), true);
+						infrastructure.getFQAN(), true, true, jobCollection.getCommonName());
 			else
 				jobSubmission.setUserProxy(infrastructure.getUserProxy());
 		} else if (infrastructure.getMiddleware().equals("unicore")) {
@@ -277,6 +277,7 @@ public class JobCollectionSubmission {
 		String sshList2[] = { "ssh://api.ct.infn.it" };
 		 String sshList3[] = { "ssh://lrt01.ct.infn.it" };
 		String wmsList[] = {"wms://wmsdecide.dir.garr.it:7443/glite_wms_wmproxy_server"};
+		String wmsListSEEGRID[] = {"wms://wms01.afroditi.hellasgrid.gr:7443/glite_wms_wmproxy_server"};
 //				"wms://wms.magrid.ma:7443/glite_wms_wmproxy_server"}; 
 //				"wms://wmsdecide.dir.garr.it:7443/glite_wms_wmproxy_server" };
 		//  wms://wms-4.dir.garr.it:7443/glite_wms_wmproxy_server
@@ -291,14 +292,14 @@ public class JobCollectionSubmission {
 //		"ssh", "liferayadmin", "liferay", sshList3);
 
 
-//		infrastructures[0] = new InfrastructureInfo("EUMEDGRID",
-//		"ldap://bdii.eumedgrid.eu:2170", wmsList,
-//		"etokenserver.ct.infn.it", "8082",
-//		"bc681e2bd4c3ace2a4c54907ea0c379b", "eumed", "eumed");
-		infrastructures[0] = new InfrastructureInfo("gridit",
-				"ldap://gridit-bdii-01.cnaf.infn.it:2170", wmsList,
-				"etokenserver.ct.infn.it", "8082",
-				"332576f78a4fe70a52048043e90cd11f", "gridit", "gridit");
+		infrastructures[0] = new InfrastructureInfo("EUMEDGRID",
+		"ldap://bdii.eumedgrid.eu:2170", wmsListSEEGRID,
+		"etokenserver.ct.infn.it", "8082",
+		"bc681e2bd4c3ace2a4c54907ea0c379b", "see", "see");
+//		infrastructures[0] = new InfrastructureInfo("gridit",
+//				"ldap://gridit-bdii-01.cnaf.infn.it:2170", wmsList,
+//				"etokenserver.ct.infn.it", "8082",
+//				"332576f78a4fe70a52048043e90cd11f", "gridit", "gridit");
 
 		// String wmsListUnicore[] = {
 		// "unicore://zam052v01.zam.kfa-juelich.de:8080/?Target=EMI-UNICOREX" };
@@ -383,16 +384,16 @@ public class JobCollectionSubmission {
 //		 tmpJobCollectionSubmission1.submitJobCollection(infrastructures,
 //		 "193.206.208.183:8162", 81);
 
-		 JobCollection wf = new WorkflowN1("mtorrisi", "Workflow N-1","mario.torrisi@ct.infn.it|mario.torrisi@ct.infn.it", "/tmp",
-		 descriptions,
-		 finalJobDescription, new String[] { "Pippo","3" });
-		 //
-		 JobCollectionSubmission tmpJobCollectionSubmission = new
-		 JobCollectionSubmission(
-		 "jdbc:mysql://localhost/userstracking", "tracking_user",
-		 "usertracking", wf);
-		 tmpJobCollectionSubmission.submitJobCollection(infrastructures,
-		 "193.206.208.183:8162", 1);
+//		 JobCollection wf = new WorkflowN1("mtorrisi", "Workflow N-1","mario.torrisi@ct.infn.it|mario.torrisi@ct.infn.it", "/tmp",
+//		 descriptions,
+//		 finalJobDescription, new String[] { "Pippo","3" });
+//		 //
+//		 JobCollectionSubmission tmpJobCollectionSubmission = new
+//		 JobCollectionSubmission(
+//		 "jdbc:mysql://localhost/userstracking", "tracking_user",
+//		 "usertracking", wf);
+//		 tmpJobCollectionSubmission.submitJobCollection(infrastructures,
+//		 "193.206.208.183:8162", 1);
 
 		 /*SOTTOMETTO UNA NUOVA COLLEZIONE
 		JobCollection collection = new JobCollection("test",
@@ -404,17 +405,17 @@ public class JobCollectionSubmission {
 		tmpJobCollectionSubmission.submitJobCollection(infrastructures,
 				"193.206.208.183:8162", 1);
 		// Fine sottomissione nuova collezione*/
-//		 JobParametric p = new JobParametric("test",
-//		 "Parametric Job - mtorrisi", "mario.torrisi@ct.infn.it",
-//		 "/tmp", descriptions, "hostname.sh");
-//		
-//		 JobCollectionSubmission tmpJobCollectionSubmission = new
-//		 JobCollectionSubmission(
-//		 "jdbc:mysql://localhost/userstracking", "tracking_user",
-//		 "usertracking", p);
-//		
-//		 tmpJobCollectionSubmission.submitJobCollection(infrastructures,
-//		 "193.206.208.183:8162", 81);
+		 JobParametric p = new JobParametric("test",
+		 "Parametric Job - mtorrisi", "mario.torrisi@ct.infn.it",
+		 "/tmp", descriptions, "hostname.sh");
+		
+		 JobCollectionSubmission tmpJobCollectionSubmission = new
+		 JobCollectionSubmission(
+		 "jdbc:mysql://localhost/userstracking", "tracking_user",
+		 "usertracking", p);
+		
+		 tmpJobCollectionSubmission.submitJobCollection(infrastructures,
+		 "193.206.208.183:8162", 81);
 		System.out.println("Vado in sleep...");
 		try {
 			Thread.sleep(60000);

@@ -1260,7 +1260,7 @@ public class UsersTrackingDBInterface {
 //								if ( !(rs.getString(12).equals("DONE"))) {
 								if ( !(rs.getString(12).equals("DONE")) && !(rs.getString(12).equals("Aborted"))) {
 
-									String jobData[] = new String[12];
+									String jobData[] = new String[13];
 									jobData[0] = rs.getString(6);
 									jobData[1] = String.valueOf(rs.getInt(1));
 									jobData[2] = rs.getString(8);
@@ -1289,6 +1289,7 @@ public class UsersTrackingDBInterface {
 									pstmt1.close();
 									//**************************
 									jobData[11] = rs.getString(19);
+									jobData[12] = rs.getString(2);
 									runningJobs.add(jobData);
 
 								}
@@ -1436,9 +1437,9 @@ public class UsersTrackingDBInterface {
 						if (!jobData[2].contains("/"))
 							//***********MARIO************
 							if(!jobData[8].equals(""))
-								jobSubmission.useRobotProxy(jobData[8].substring(0,jobData[8].indexOf(':')),jobData[8].substring(jobData[8].indexOf(':')+1), jobData[2],jobData[3],jobData[4],true, true);
+								jobSubmission.useRobotProxy(jobData[8].substring(0,jobData[8].indexOf(':')),jobData[8].substring(jobData[8].indexOf(':')+1), jobData[2],jobData[3],jobData[4],true, true, jobData[12]);
 							else
-								jobSubmission.useRobotProxy(jobData[2],jobData[3],jobData[4],true, true);
+								jobSubmission.useRobotProxy(jobData[2],jobData[3],jobData[4],true, true, jobData[12]);
 							//****************************
 						else
 							jobSubmission.setUserProxy(jobData[2]);
@@ -1448,9 +1449,9 @@ public class UsersTrackingDBInterface {
 						if (!jobData[2].contains("/"))
 							//***********MARIO************
 							if(!jobData[8].equals(""))
-								jobSubmission.useRobotProxy(jobData[8].substring(0,jobData[8].indexOf(':')),jobData[8].substring(jobData[8].indexOf(':')+1), jobData[2],jobData[3],jobData[4],true,true);
+								jobSubmission.useRobotProxy(jobData[8].substring(0,jobData[8].indexOf(':')),jobData[8].substring(jobData[8].indexOf(':')+1), jobData[2],jobData[3],jobData[4],true,true, jobData[12]);
 							else
-								jobSubmission.useRobotProxy(jobData[2],jobData[3],jobData[4],true, true);
+								jobSubmission.useRobotProxy(jobData[2],jobData[3],jobData[4],true, true, jobData[12]);
 							//****************************
 						else
 							jobSubmission.setUserProxy(jobData[2]);

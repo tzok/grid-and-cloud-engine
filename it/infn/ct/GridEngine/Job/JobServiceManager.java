@@ -60,7 +60,8 @@ public class JobServiceManager {
 	private String FQAN = "";
 	boolean ProxyRenewal = true;
 	boolean RFC = false;
-
+	private String cnLabel;
+	
 	private String JKSPath = "";
 	private String JKSPassword = "";
 
@@ -139,10 +140,35 @@ public class JobServiceManager {
 	 *            not
 	 */
 	protected void useRobotProxy(String etokenserver, String etokenserverport,
+			String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc) {
+		usingRobotProxy = true;
+
+		useRobotProxy(etokenserver,etokenserverport,proxyId,vo,fqan,proxyrenewal, rfc, "Empty");
+	}
+	
+	/**
+	 * This method specifies that for interaction will be used the specified
+	 * robot proxy.
+	 * 
+	 * @param etokenserver
+	 *            proxy robot host
+	 * @param etokenserverport
+	 *            proxy robot port
+	 * @param proxyId
+	 *            proxy robot identifier
+	 * @param vo
+	 *            proxy robot virtual organization
+	 * @param fqan
+	 *            proxy robot roles
+	 * @param proxyrenewal
+	 *            a boolean value that says if the robot proxy is renewable or
+	 *            not
+	 */
+	protected void useRobotProxy(String etokenserver, String etokenserverport,
 			String proxyId, String vo, String fqan, boolean proxyrenewal) {
 		usingRobotProxy = true;
 
-		useRobotProxy(etokenserver,etokenserverport,proxyId,vo,fqan,proxyrenewal,false);
+		useRobotProxy(etokenserver,etokenserverport,proxyId,vo,fqan,proxyrenewal,false, "Empty");
 	}
 	
 	/**
@@ -167,7 +193,7 @@ public class JobServiceManager {
 	 *            not
 	 */
 	protected void useRobotProxy(String etokenserver, String etokenserverport,
-			String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc) {
+			String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc, String cnLabel) {
 		usingRobotProxy = true;
 
 		etokenServer = etokenserver;
@@ -177,6 +203,7 @@ public class JobServiceManager {
 		FQAN = fqan;
 		ProxyRenewal = proxyrenewal;
 		RFC = rfc;
+		this.cnLabel = "eToken:" + cnLabel;
 	}
 
 	/**
@@ -197,7 +224,7 @@ public class JobServiceManager {
 			boolean proxyrenewal) {
 		usingRobotProxy = true;
 
-		useRobotProxy(proxyId,vo,fqan,proxyrenewal,false);
+		useRobotProxy(proxyId,vo,fqan,proxyrenewal,false, "Empty");
 	}
 
 	/**
@@ -218,7 +245,7 @@ public class JobServiceManager {
 	 *            not
 	 */
 	protected void useRobotProxy(String proxyId, String vo, String fqan,
-			boolean proxyrenewal, boolean rfc) {
+			boolean proxyrenewal, boolean rfc,  String cnLabel) {
 		usingRobotProxy = true;
 
 		ProxyId = proxyId;
@@ -226,6 +253,7 @@ public class JobServiceManager {
 		FQAN = fqan;
 		ProxyRenewal = proxyrenewal;
 		RFC = rfc;
+		this.cnLabel = "eToken:" + cnLabel;
 	}
 
 	/**
@@ -304,16 +332,9 @@ public class JobServiceManager {
 				// session = jobservice.getSession();
 			} else {
 				jobservice = jobServicesDispatcher.getJobService(etokenServer,
-						etokenServerPort, ProxyId, VO, FQAN, ProxyRenewal, RFC,
+						etokenServerPort, ProxyId, VO, FQAN, ProxyRenewal, RFC, cnLabel,
 						resourceManager.toString());
 				DN = jobServicesDispatcher.getDN(jobservice);
-				// session = jobservice.getSession();
-				//
-				// Context[] contexts = session.listContexts();
-				// String proxyPath =
-				// contexts[0].getAttribute(Context.USERPROXY);
-				// setUserProxy(proxyPath);
-				// System.out.println("proxyPath="+proxyPath);
 			}
 
 		} catch (Exception e) {
@@ -569,6 +590,21 @@ public class JobServiceManager {
 
 	protected String getSSHPassword() {
 		return SSHPassword;
+	}
+
+	protected String getProxyRequestOptions() {
+		String requestOptions = "";
+		//disable-voms-proxy=false&proxy-renewal=true&rfc-proxy=true&cn-label=eToken:Empty
+		if(ProxyRenewal){
+			requestOptions = "proxy-renewal=true&";
+		}
+		
+		if(RFC){
+			requestOptions += "rfc-proxy=true&";
+		}
+		
+		requestOptions += "cn-label=" + cnLabel;
+		return requestOptions;
 	}
 
 }

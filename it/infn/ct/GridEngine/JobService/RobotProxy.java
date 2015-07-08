@@ -146,7 +146,7 @@ public class RobotProxy {
 	 *            not
 	 */
 	public RobotProxy(String etokenserver, String etokenserverport,
-			String proxyid, String vo, String fqan, boolean proxyrenewal, boolean rfc) {
+			String proxyid, String vo, String fqan, boolean proxyrenewal, boolean rfc, String cnLabel) {
 		eTokenServer = etokenserver;
 		eTokenServerPort = etokenserverport;
 		proxyId = proxyid;
@@ -154,6 +154,7 @@ public class RobotProxy {
 		FQAN = fqan;
 		proxyRenewal = proxyrenewal;
 		RFC = rfc;
+		this.cnLabel = cnLabel;
 	}
 
 	/**

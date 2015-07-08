@@ -660,6 +660,20 @@ public class JSagaJobSubmission {
 	public void useRobotProxy(String etokenserver, String etokenserverport, String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc) {
 		jobServiceManager.useRobotProxy(etokenserver, etokenserverport, proxyId, vo, fqan, proxyrenewal, rfc);
 	}
+	
+	/**
+	 * 
+	 * @param etokenserver
+	 * @param etokenserverport
+	 * @param proxyId
+	 * @param vo
+	 * @param fqan
+	 * @param proxyrenewal
+	 * @param cnLabel
+	 */
+	public void useRobotProxy(String etokenserver, String etokenserverport, String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc, String cnLabel) {
+		jobServiceManager.useRobotProxy(etokenserver, etokenserverport, proxyId, vo, fqan, proxyrenewal, rfc, cnLabel);
+	}
 
 	/**
 	 * 
@@ -679,8 +693,8 @@ public class JSagaJobSubmission {
 	 * @param fqan
 	 * @param proxyrenewal
 	 */
-	public void useRobotProxy(String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc) {
-		jobServiceManager.useRobotProxy(proxyId, vo, fqan, proxyrenewal, rfc);
+	public void useRobotProxy(String proxyId, String vo, String fqan, boolean proxyrenewal, boolean rfc,  String cnLabel) {
+		jobServiceManager.useRobotProxy(proxyId, vo, fqan, proxyrenewal, rfc, cnLabel);
 	}
 	
 	/**
@@ -2056,9 +2070,9 @@ public class JSagaJobSubmission {
 					logger.debug("Using Robot Proxy...");
 					if(!jobAborted.geteTokenServer().equals("")){
 						String eTokenServerTmp = jobAborted.geteTokenServer();
-						useRobotProxy(eTokenServerTmp.substring(0,eTokenServerTmp.indexOf(':')), eTokenServerTmp.substring(eTokenServerTmp.indexOf(':')+1), jobAborted.getProxyId(), jobAborted.getVO(), jobAborted.getFqan(), description.isProxyRenewal());
+						useRobotProxy(eTokenServerTmp.substring(0,eTokenServerTmp.indexOf(':')), eTokenServerTmp.substring(eTokenServerTmp.indexOf(':')+1), jobAborted.getProxyId(), jobAborted.getVO(), jobAborted.getFqan(), description.isProxyRenewal(), true, jobAborted.getCommonName());
 					}else{
-						useRobotProxy(jobAborted.getProxyId(), jobAborted.getVO(), jobAborted.getFqan(), description.isProxyRenewal());
+						useRobotProxy(jobAborted.getProxyId(), jobAborted.getVO(), jobAborted.getFqan(), description.isProxyRenewal(),true, jobAborted.getCommonName());
 					}
 				}else{
 					logger.debug("Using User Proxy...");
@@ -2144,9 +2158,9 @@ public class JSagaJobSubmission {
 					logger.debug("Using Robot Proxy...");
 					if(!finalJob.geteTokenServer().equals("")){
 						String eTokenServerTmp = finalJob.geteTokenServer();
-						useRobotProxy(eTokenServerTmp.substring(0,eTokenServerTmp.indexOf(':')), eTokenServerTmp.substring(eTokenServerTmp.indexOf(':')+1), finalJob.getProxyId(), finalJob.getVO(), finalJob.getFqan(), finalJobDesc.isProxyRenewal());
+						useRobotProxy(eTokenServerTmp.substring(0,eTokenServerTmp.indexOf(':')), eTokenServerTmp.substring(eTokenServerTmp.indexOf(':')+1), finalJob.getProxyId(), finalJob.getVO(), finalJob.getFqan(), finalJobDesc.isProxyRenewal(), true,finalJob.getCommonName());
 					}else{
-						useRobotProxy(finalJob.getProxyId(), finalJob.getVO(), finalJob.getFqan(), finalJobDesc.isProxyRenewal());
+						useRobotProxy(finalJob.getProxyId(), finalJob.getVO(), finalJob.getFqan(), finalJobDesc.isProxyRenewal(), true, finalJob.getCommonName());
 					}
 				}else{
 					logger.debug("Using User Proxy...");
@@ -2350,7 +2364,7 @@ public class JSagaJobSubmission {
 //				System.out.println("Job output have been retrieved successfully (if it exists)");
 			}
 			catch(Exception exception) {
-				logger.error(exception.toString());
+				logger.error("Error downloading output" + exception.toString());
 //				System.out.println(exception.toString());
 				exception.printStackTrace();
 			}
@@ -2676,6 +2690,8 @@ public class JSagaJobSubmission {
 //			/*"wms://wms013.cnaf.infn.it:7443/glite_wms_wmproxy_server",*/
 //			"wms://egee-wms-01.cnaf.infn.it:7443/glite_wms_wmproxy_server"
 				};
+		String EUMEDwmsList[] = {"wms://wms.ulakbim.gov.tr:7443/glite_wms_wmproxy_server"};
+		String bdiiEumed = "ldap://bdii.eumedgrid.eu:2170";
 		String sshList[] = {"ssh://api.ct.infn.it"};
 		//String CEs[] = {"grisuce.scope.unina.it", "ce-02.roma3.infn.it", "gridce3.pi.infn.it"};
 		String CEs[] = {//"ce-02.roma3.infn.it:8443/cream-pbs-grid"
@@ -2747,12 +2763,13 @@ public class JSagaJobSubmission {
 //			tmpJSaga.setWMSList(rOCCIResourcesList);
 //			tmpJSaga.useRobotProxy("etokenserver.ct.infn.it", "8082", "332576f78a4fe70a52048043e90cd11f", "fedcloud.egi.eu", "fedcloud.egi.eu", true);
 //			tmpJSaga.setWMSList(sshList);
-			tmpJSaga.setWMSList(wmsList);
-			tmpJSaga.setCEList(CEs);
-			tmpJSaga.setRandomCE(true);
+//			tmpJSaga.setWMSList(wmsList);
+			tmpJSaga.setWMSList(EUMEDwmsList);
+//			tmpJSaga.setCEList(CEs);
+//			tmpJSaga.setRandomCE(true);
 //			tmpJSaga.setSSHCredential("liferayadmin", "liferayadmin");
 //			tmpJSaga.setSSHCredential("root", "Passw0rd!");
-			tmpJSaga.useRobotProxy("etokenserver.ct.infn.it", "8082", "332576f78a4fe70a52048043e90cd11f", "gridit", "gridit", true);
+			tmpJSaga.useRobotProxy("etokenserver2.ct.infn.it", "8082", "bc779e33367eaad7882b9dfaa83a432c", "eumed", "eumed", true, true, "test");
 //			tmpJSaga.submitJobAsync("mtorrisi", "193.206.208.183:8162", 1, "ssh://gilda-liferay-vm-06.ct.infn.it:5000", "SSH - Stress test job - "+i);
 //			tmpJSaga.submitJobAsync("mtorrisi", "193.206.208.183:8162", 1, "ssh://api.ct.infn.it", "SSH - Stress test job - "+i);
 //			tmpJSaga.submitJobAsync("mtorrisi", "193.206.208.183:8162", 1, "wms://wms-4.dir.garr.it:7443/glite_wms_wmproxy_server", "WMS - Stress test job - "+i);

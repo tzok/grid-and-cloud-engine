@@ -234,25 +234,25 @@ public class JobServicesDispatcher {
 		            logger.info(("PROXY PATH: " + proxyPath));
 		            logger.info(("PROXY PATH CONTEXT: " + context.getAttribute(Context.USERPROXY)));
 		            // example code to get a GSSCredential object
-		            File proxyFile = new File(proxyPath);
-		            byte [] proxyBytes = new byte[(int) proxyFile.length()];
-		            FileInputStream in = new FileInputStream(proxyFile);
-		            in.read(proxyBytes);
-		            in.close();
-
-		            ExtendedGSSManager manager =
-		                    (ExtendedGSSManager) ExtendedGSSManager.getInstance();
-
-		            GSSCredential cred =
-		                    manager.createCredential(
-		                        proxyBytes,
-		                        ExtendedGSSCredential.IMPEXP_OPAQUE,
-		                        GSSCredential.DEFAULT_LIFETIME,
-		                        null, // use default mechanism: GSI
-		                        GSSCredential.INITIATE_AND_ACCEPT);
+//		            File proxyFile = new File(proxyPath);
+//		            byte [] proxyBytes = new byte[(int) proxyFile.length()];
+//		            FileInputStream in = new FileInputStream(proxyFile);
+//		            in.read(proxyBytes);
+//		            in.close();
+//
+//		            ExtendedGSSManager manager =
+//		                    (ExtendedGSSManager) ExtendedGSSManager.getInstance();
+//
+//		            GSSCredential cred =
+//		                    manager.createCredential(
+//		                        proxyBytes,
+//		                        ExtendedGSSCredential.IMPEXP_OPAQUE,
+//		                        GSSCredential.DEFAULT_LIFETIME,
+//		                        null, // use default mechanism: GSI
+//		                        GSSCredential.INITIATE_AND_ACCEPT);
 
 		            // code to pass the GSSCredential object to JSAGA
-		            context.setAttribute("UserProxyObject",	fr.in2p3.jsaga.adaptor.security.impl.InMemoryProxySecurityCredential.toBase64(cred));
+//		            context.setAttribute("UserProxyObject",	fr.in2p3.jsaga.adaptor.security.impl.InMemoryProxySecurityCredential.toBase64(cred));
 					
 				}
 				
@@ -377,7 +377,7 @@ public class JobServicesDispatcher {
 	 */
 	public synchronized JobService getJobService(String etokenserver,
 			String etokenserverport, String proxyId, String vo, String fqan,
-			boolean proxyrenewal, boolean rfc, String resourceManager) {
+			boolean proxyrenewal, boolean rfc, String cnLabel, String resourceManager) {
 		logger.info("GetJobService RobotProxy...");
 		int oldCounter = 0;
 		String proxyInfo = proxyId + "-" + vo + "-" + fqan + "-"
@@ -478,7 +478,7 @@ public class JobServicesDispatcher {
 			RobotProxy robotProxy = null;
 			if ((!etokenserver.equals("")) || (!etokenserverport.equals("")))
 				robotProxy = new RobotProxy(etokenserver, etokenserverport,
-						proxyId, vo, fqan, proxyrenewal, rfc);
+						proxyId, vo, fqan, proxyrenewal, rfc, cnLabel);
 			else
 				robotProxy = new RobotProxy(proxyId, vo, fqan, proxyrenewal, rfc);
 
