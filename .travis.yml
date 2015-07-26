@@ -10,7 +10,7 @@ before_install:
  - cd GridEngine
  - mkdir src
  - mv ../it/ ./src
- - cp ../build.xml
+ - cp ../build.xml .
 
 # Install dependencies
  - wget http://grid.ct.infn.it/csgf/binaries/GridEngine_v1.5.10.zip
