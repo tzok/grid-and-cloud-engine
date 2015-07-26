@@ -10,6 +10,8 @@ before_install:
  - cd GridEngine
  - mkdir src
  - mv ../it/ ./src
+ - rm -rf src/it/infn/ct/ThreadPool/
+ - rm -rf src/it/infn/ct/GridEngine/Data
  - cp ../build.xml .
 
 # Install dependencies
