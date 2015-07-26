@@ -1,0 +1,25 @@
+language: java
+
+jdk:
+ - openjdk7
+
+before_install: 
+ - sudo apt-get update -qq
+
+ - mkdir src 
+#- export SOURCE=${PWD}/src
+ - mv it/ src/
+ - env
+
+# Install dependencies
+ - wget http://grid.ct.infn.it/csgf/binaries/GridEngine_v1.5.10.zip
+ - unzip GridEngine_v1.5.10.zip 
+
+# Building the grid and Cloud engine
+install:
+ - ant build
+
+notifications:
+  email:
+    recipients:
+        - mario.torrisi@ct.infn.it
