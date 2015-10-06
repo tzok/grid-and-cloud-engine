@@ -93,7 +93,7 @@ Then you need to download and configure the Catania Grid & Cloud Engine dependen
 
     cp -r lib /opt/glassfish3/glassfish/domains/liferay/lib/
 
-4. Download the attached GridEngineLogConfig.xml (link), and move this file to the Liferay config folder:
+4. Download the attached GridEngineLogConfig.xml (`link <https://raw.githubusercontent.com/csgf/grid-and-cloud-engine/master/config/GridEngineLogConfig.xml>`_), and move this file to the Liferay config folder:
 
 .. code:: bash
     
