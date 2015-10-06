@@ -1,4 +1,4 @@
-DROP DATABASE userstracking;
+DROP DATABASE IF EXISTS userstracking;
 
 CREATE DATABASE userstracking;
 
