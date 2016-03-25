@@ -524,8 +524,8 @@ public class MultiInfrastructureJobSubmission {
 			//****************
 		}
 		
-		if (infrastructure.getWmsList()!=null)
-			jobSubmission.setWMSList(infrastructure.getWmsList());
+		if (infrastructure.getResourcemanagerList()!=null)
+			jobSubmission.setWMSList(infrastructure.getResourcemanagerList());
 		
 		if ( (infrastructure.getMiddleware().equals("glite")) || (infrastructure.getMiddleware().equals("wsgram")) || (infrastructure.getMiddleware().equals("rocci")) ) {
 			if (infrastructure.getUserProxy().equals(""))
@@ -680,7 +680,8 @@ public class MultiInfrastructureJobSubmission {
 		p.setProperty("GLOBUS_TCP_PORT_RANGE", "20000,25000");
 		System.setProperties(p); 
 		System.out.println("GLOBUS_TCP_PORT_RANGE: " + p.getProperty("GLOBUS_TCP_PORT_RANGE"));
-		
+		p.setProperty("GridEngineLogConfig.path", "/home/mario/Documents/GridEngineLogConfig.xml");
+		p.setProperty("GridEngineLog.path", "/home/mario/Documents/logs/");
 		InfrastructureInfo infrastructures[] = new InfrastructureInfo[6];
 		
 		//gridit
@@ -710,7 +711,7 @@ public class MultiInfrastructureJobSubmission {
 //		infrastructures[0] = new InfrastructureInfo("gridit","ldap://egee-bdii.cnaf.infn.it:2170", wmsList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","gridit","gridit", "PROVA",false);
 		
 
-//		infrastructures[0] = new InfrastructureInfo("gridit 0", wmsList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","gridit","gridit", CEs);
+		infrastructures[0] = new InfrastructureInfo("gridit 0", "ldap://egee-bdii.cnaf.infn.it:2170", wmsList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","gridit","gridit");
 //		infrastructures[4] = new InfrastructureInfo("gridit 1","ldap://gridit-bdii-01.cnaf.infn.it:2170", wmsList, "/tmp/proxy","");
 //		infrastructures[0] = new InfrastructureInfo("gridit", wmsList, "/tmp/proxy","");
 //		infrastructures[2] = new InfrastructureInfo("gridit 2", wmsList, "/tmp/proxy","",CEs);
@@ -718,17 +719,23 @@ public class MultiInfrastructureJobSubmission {
 		String wmsListGARUDA[] = {"gatekeeper://xn03.ctsf.cdacb.in:2119/jobmanager-gw"};
 		infrastructures[1] = new InfrastructureInfo("GARUDA","", wmsListGARUDA, "/home/mario/x509up_u500", "");
 		//infrastructures[1] = new InfrastructureInfo("GARUDA","wsgram","", wmsListGARUDA, "etokenserver.ct.infn.it","8082","332576f78a4fe70a52048043e90cd11f","gridit","gridit");
-		String sshList[] = {"ssh://api.ct.infn.it"};
-//		String sshList[] = {"ssh://gilda-liferay-vm-06.ct.infn.it:5000"};
+//		String sshList[] = {"ssh://api.ct.infn.it"};
+//		String sshList[] = {"ssh://90.147.74.95"}; //jobtest
+//		String sshList[] = {"ssh://90.147.74.77"}; //futuregateway
+//		String sshList[] = {"ssh://151.97.41.60"}; //jsaga
+//		String sshList[] = {"ssh://151.97.41.51"}; //repast
+		String sshList[] = {"ssh://151.97.41.78"}; //repast
 //		String sshList[] = {"ssh://cresco1-f1.portici.enea.it"};
 //		infrastructures[2] = new InfrastructureInfo("SSH Infrastructure", "ssh", "saga_igi", "sagaXigi", sshList);
-		infrastructures[2] = new InfrastructureInfo("SSH Infrastructure", "ssh", "root", "Passw0rd!", sshList);
+//		infrastructures[2] = new InfrastructureInfo("SSH Infrastructure", "ssh", "jobtest", "Xvf56jZ751f", sshList);
+//		infrastructures[2] = new InfrastructureInfo("SSH Infrastructure", "ssh", "jsaga", sshList);
+		infrastructures[2] = new InfrastructureInfo("SSH Infrastructure", "ssh", "cvmfs", sshList);
 		String wmsListUnicore[] = {"unicore://zam052v01.zam.kfa-juelich.de:8080/?Target=EMI-UNICOREX"};
 		//String wmsListUnicore[] = {"unicore://zam052v02.zam.kfa-juelich.de:8080/?Target=EMI-UNICOREX-RC"};
 		infrastructures[4] = new InfrastructureInfo("Unicore","unicore","/tmp/robot2012.jks", "robot2012", wmsListUnicore);
 //		
-		String wmsListOurGrid[] = {"ourgrid://api.ourgrid.org"};
-		infrastructures[3] = new InfrastructureInfo("OurGrid","ourgrid","diego", "scardaci", wmsListOurGrid);
+//		String wmsListOurGrid[] = {"ourgrid://api.ourgrid.org"};
+//		infrastructures[3] = new InfrastructureInfo("OurGrid","ourgrid","diego", "scardaci", wmsListOurGrid);
 //		
 //		String wmsListGenesis[] = {"bes-genesis2://xcg-server1.uvacse.virginia.edu:20443/axis/services/GeniiBESPortType?genii-container-id=93B641B7-9422-EA4C-A90B-CA6A9D98E344"};
 //		infrastructures[4] = new InfrastructureInfo("GenesisII","bes-genesis2","/home/diego/genesisII/genesis-keys.jks", "chaindemo", wmsListGenesis);
@@ -739,11 +746,11 @@ public class MultiInfrastructureJobSubmission {
 		//cometa
 		//infrastructures[1] = new InfrastructureInfo("cometa","ldap://infn-bdii-01.ct.pi2s2.it:2170", wmsList2,"/home/diego/proxy_cometa.txt");
 		//infrastructures[1] = new InfrastructureInfo("cometa","ldap://infn-bdii-01.ct.pi2s2.it:2170", wmsList2, "myproxy.ct.infn.it","8082","21174","cometa","cometa");
-		String EUMEDwmsList[] = {"wms://wms.ulakbim.gov.tr:7443/glite_wms_wmproxy_server"};
-		infrastructures[0] = new InfrastructureInfo("EUMEDGRID",
-				"ldap://bdii.eumedgrid.eu:2170", EUMEDwmsList,
-				"etokenserver.ct.infn.it", "8082",
-				"bc681e2bd4c3ace2a4c54907ea0c379b", "eumed", "eumed", true);
+//		String EUMEDwmsList[] = {"wms://wms.ulakbim.gov.tr:7443/glite_wms_wmproxy_server"};
+//		infrastructures[0] = new InfrastructureInfo("EUMEDGRID",
+//				"ldap://bdii.eumedgrid.eu:2170", EUMEDwmsList,
+//				"etokenserver.ct.infn.it", "8082",
+//				"bc681e2bd4c3ace2a4c54907ea0c379b", "eumed", "eumed", true);
 //		
 		
 		//https://egi-cloud.zam.kfa-juelich.de:8787
@@ -786,7 +793,7 @@ public class MultiInfrastructureJobSubmission {
 		
 		System.out.println("defining cloud infrastructure...");
 		
-		//infrastructures[0] = new InfrastructureInfo("EGI-FEDCLOUD","rocci", "", rOCCIResourcesList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","fedcloud.egi.eu","fedcloud.egi.eu",true);
+//		infrastructures[0] = new InfrastructureInfo("EGI-FEDCLOUD","rocci", "", rOCCIResourcesList, "etokenserver.ct.infn.it","8082","bc779e33367eaad7882b9dfaa83a432c","fedcloud.egi.eu","fedcloud.egi.eu",true);
 						
 		
 		//gisela
@@ -804,9 +811,10 @@ public class MultiInfrastructureJobSubmission {
 		
 		for (int i=0;i<num_job;i++) {
 			MultiInfrastructureJobSubmission multiInfrastructureJobSubmission = new MultiInfrastructureJobSubmission("jdbc:mysql://localhost/userstracking","tracking_user","usertracking");
-			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[0]);
+//			MultiInfrastructureJobSubmission multiInfrastructureJobSubmission = new MultiInfrastructureJobSubmission();
+//			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[0]);
 //			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[1]);
-//			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[2]);
+			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[2]);
 //			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[3]);
 //			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[4]);
 //			multiInfrastructureJobSubmission.addInfrastructure(infrastructures[5]);
@@ -815,7 +823,7 @@ public class MultiInfrastructureJobSubmission {
 			GEJobDescription description = new GEJobDescription();
 			description.setExecutable("/bin/sh");
 			description.setArguments("hostname.sh");
-			description.setInputFiles("/home/mario/Documenti/hostname.sh");
+			description.setInputFiles("/home/mario/Documents/hostname.sh");
 //			description.setOutputFiles("output.README");
 			description.setOutputPath("/tmp");
 			description.setOutput("myOutput-" + i + ".txt");
@@ -832,7 +840,7 @@ public class MultiInfrastructureJobSubmission {
 //				multiInfrastructureJobSubmission.setOutputPath("/tmp");
 //				multiInfrastructureJobSubmission.setJobOutput("myOutput-" + i + ".txt");
 //				multiInfrastructureJobSubmission.setJobError("myError-" + i + ".txt");
-//				multiInfrastructureJobSubmission.setInputFiles("/home/mario/Documenti/hostname.sh");
+//				multiInfrastructureJobSubmission.setInputFiles("/home/mario/Documents/hostname.sh");
 //				multiInfrastructureJobSubmission.setRandomCE(true);
 				
 				//***************MARIO*****************

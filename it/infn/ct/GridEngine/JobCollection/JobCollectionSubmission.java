@@ -164,8 +164,8 @@ public class JobCollectionSubmission {
 			// ****************
 		}
 
-		if (infrastructure.getWmsList() != null)
-			jobSubmission.setWMSList(infrastructure.getWmsList());
+		if (infrastructure.getResourcemanagerList() != null)
+			jobSubmission.setWMSList(infrastructure.getResourcemanagerList());
 
 		if ((infrastructure.getMiddleware().equals("glite"))
 				|| (infrastructure.getMiddleware().equals("wsgram"))) {
@@ -275,7 +275,7 @@ public class JobCollectionSubmission {
 		String sshList[] = { "ssh://gilda-liferay-vm-06.ct.infn.it:5000" };
 		String sshList1[] = { "ssh://gilda-liferay-vm-15.ct.infn.it:5000" };
 		String sshList2[] = { "ssh://api.ct.infn.it" };
-		 String sshList3[] = { "ssh://lrt01.ct.infn.it" };
+		String sshList3[] = {"ssh://90.147.74.95"}; //jobtest
 		String wmsList[] = {"wms://wmsdecide.dir.garr.it:7443/glite_wms_wmproxy_server"};
 		String wmsListSEEGRID[] = {"wms://wms01.afroditi.hellasgrid.gr:7443/glite_wms_wmproxy_server"};
 //				"wms://wms.magrid.ma:7443/glite_wms_wmproxy_server"}; 
@@ -288,14 +288,14 @@ public class JobCollectionSubmission {
 //		infrastructures[0] = new InfrastructureInfo("SSH Infrastructure",
 //				"ssh", "root", "Passw0rd!", sshList2);
 ////
-//		infrastructures[1] = new InfrastructureInfo("SSH Infrastructure",
-//		"ssh", "liferayadmin", "liferay", sshList3);
+		infrastructures[0] = new InfrastructureInfo("SSH Infrastructure",
+		"ssh", "jobtest", sshList3);
 
 
-		infrastructures[0] = new InfrastructureInfo("EUMEDGRID",
-		"ldap://bdii.eumedgrid.eu:2170", wmsListSEEGRID,
-		"etokenserver.ct.infn.it", "8082",
-		"bc681e2bd4c3ace2a4c54907ea0c379b", "see", "see");
+//		infrastructures[0] = new InfrastructureInfo("EUMEDGRID",
+//		"ldap://bdii.eumedgrid.eu:2170", wmsListSEEGRID,
+//		"etokenserver.ct.infn.it", "8082",
+//		"bc681e2bd4c3ace2a4c54907ea0c379b", "see", "see");
 //		infrastructures[0] = new InfrastructureInfo("gridit",
 //				"ldap://gridit-bdii-01.cnaf.infn.it:2170", wmsList,
 //				"etokenserver.ct.infn.it", "8082",
@@ -314,20 +314,20 @@ public class JobCollectionSubmission {
 			switch (i) {
 			case 0:
 //				description.setExecutable("/bin/hostname");
-				description.setArguments("hostname.sh");
-				description.setInputFiles("./hostname.sh");
-				description.setOutputFiles("output.README");
+				description.setArguments("-f");
+//				description.setInputFiles("./hostname.sh");
+//				description.setOutputFiles("output.README");
 				break;
 			case 1:
 //				description.setExecutable("/bin/ls");
-//				description.setArguments("-l");
-				description.setArguments("ls.sh");
-				description.setInputFiles("./ls.sh");
+				description.setArguments("-a");
+//				description.setArguments("ls.sh");
+//				description.setInputFiles("./ls.sh");
 				break;
 			case 2:
 //				description.setExecutable("/bin/pwd");
-				description.setArguments("pwd.sh");
-				description.setInputFiles("./pwd.sh");
+//				description.setArguments("pwd.sh");
+//				description.setInputFiles("./pwd.sh");
 				break;
 			default:
 				if ((i % 2) != 0) {

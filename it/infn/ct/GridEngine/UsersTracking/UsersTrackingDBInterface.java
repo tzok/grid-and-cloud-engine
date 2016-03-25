@@ -25,6 +25,7 @@ Author: Diego Scardaci (INFN)
 
 package it.infn.ct.GridEngine.UsersTracking;
 
+import it.infn.ct.GridEngine.Config.GridEngineConfig;
 import it.infn.ct.GridEngine.Job.JSagaJobSubmission;
 import it.infn.ct.GridEngine.Job.JobId;
 import it.infn.ct.GridEngine.JobCollection.ClosedJobCollection;
@@ -63,6 +64,8 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 public class UsersTrackingDBInterface {
+	
+	GridEngineConfig gec = GridEngineConfig.getInstance();
 	
 	Connection conn = null;
 	String URL		= "";
@@ -126,8 +129,10 @@ public class UsersTrackingDBInterface {
 		if (conn != null) return true; //Connection just created
 	    
 		//String DATASOURCE_CONTEXT = "java:comp/env/jdbc/blah";
-		String DATASOURCE_CONTEXT = "jdbc/UserTrackingPool";
+		//String DATASOURCE_CONTEXT = "jdbc/UserTrackingPool";
+		String DATASOURCE_CONTEXT = gec.getUserstrackingDatasource();
 
+		
 		Connection result = null;
 		try {
 			Context initialContext = new InitialContext();

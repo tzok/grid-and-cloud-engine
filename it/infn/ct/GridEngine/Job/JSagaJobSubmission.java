@@ -159,7 +159,7 @@ public class JSagaJobSubmission {
 	private String userName = "";
 	private String password = "";
 	
-	private int shallowRetry = 20;
+	private int shallowRetry = 5;
 	private int allowResub = -1;
 	
 	private boolean checkJobsStatus = true;
@@ -195,8 +195,8 @@ public class JSagaJobSubmission {
 //		System.setProperty("JSAGA_HOME", "/home/mario/JSAGA/");
 		System.setProperty("saga.factory", "fr.in2p3.jsaga.impl.SagaFactoryImpl");		
 //		PropertyConfigurator.configure("log4j.properties");
-		DOMConfigurator.configure("GridEngineLogConfig.xml");
-		
+//		DOMConfigurator.configure("GridEngineLogConfig.xml");
+		DOMConfigurator.configure((System.getProperty("GridEngineLogConfig.path")!=null ? System.getProperty("GridEngineLogConfig.path") : "GridEngineLogConfig.xml"));
 		
 		URL = db;
 		userName = dbUser;
@@ -241,7 +241,8 @@ public class JSagaJobSubmission {
 //		System.setProperty("JSAGA_HOME", "/home/mario/JSAGA/");
 		System.setProperty("saga.factory", "fr.in2p3.jsaga.impl.SagaFactoryImpl");
 		//PropertyConfigurator.configure("log4j.properties");
-		DOMConfigurator.configure("GridEngineLogConfig.xml");
+//		DOMConfigurator.configure("GridEngineLogConfig.xml");
+		DOMConfigurator.configure((System.getProperty("GridEngineLogConfig.path")!=null ? System.getProperty("GridEngineLogConfig.path") : "GridEngineLogConfig.xml"));
 		DBInterface = new UsersTrackingDBInterface();
 		
 		jobServiceManager = new JobServiceManager();
@@ -1604,7 +1605,7 @@ public class JSagaJobSubmission {
 				}
 				catch(Exception exc) {
 					exc.printStackTrace();
-					logger.warn(exc.toString());
+					logger.error(exc.toString());
 //					System.out.println(exc.toString());
 					count ++;
 					//sleep 1 sec between each re-submission
@@ -1740,7 +1741,15 @@ public class JSagaJobSubmission {
 				if (jobCheckStatusService==null) {
 					logger.info("Get local JobCheckStatusService");
 //					System.out.println("get local JobCheckStatusService");
-					jobCheckStatusService = JobCheckStatusService.getInstance(URL, userName, password);
+//					jobCheckStatusService = JobCheckStatusService.getInstance(URL, userName, password);
+					if(!DBInterface.inAppServer){
+						logger.info("Creating JobCheckStatusService with local connection parameters.");
+						jobCheckStatusService = JobCheckStatusService.getInstance(URL, userName, password);
+					}
+					else {
+						logger.info("Creating JobCheckStatusService with datasource paramters.");
+						jobCheckStatusService =  JobCheckStatusService.getInstance();
+					}
 				}
 
 				jobCheckStatusService.startJobCheckStatusThread(commonName, outputPathPrefix);
@@ -1818,7 +1827,8 @@ public class JSagaJobSubmission {
 			}
 		}
 		else if (adaptor.equals("ssh")) {
-			if ( (SSHUserName.equals("")) || (SSHPassword.equals("")) ) {
+//			if ( (SSHUserName.equals("")) || (SSHPassword.equals("")) ) {
+			if ( (SSHUserName.equals(""))){
 				logger.error("Error in getJobStatus - No SSH credentials defined.");
 				return output;
 			}
@@ -2277,7 +2287,8 @@ public class JSagaJobSubmission {
 			}
 		}
 		else if (adaptor.equals("ssh")) {
-			if ( (SSHUserName.equals("")) || (SSHPassword.equals("")) ) {
+//			if ( (SSHUserName.equals("")) || (SSHPassword.equals("")) ) {
+			if ( (SSHUserName.equals(""))) {
 				logger.error("Error in getJobStatus - No SSH credentials defined.");
 				return;
 			}
@@ -2455,7 +2466,8 @@ public class JSagaJobSubmission {
 			}
 		}
 		else if (adaptor.equals("ssh")) {
-			if ( (SSHUserName.equals("")) || (SSHPassword.equals("")) ) {
+//			if ( (SSHUserName.equals("")) || (SSHPassword.equals("")) ) {
+			if ( (SSHUserName.equals(""))) {
 				logger.error("Error in cancelJob - No SSH credentials defined.");
 				return "";
 			}

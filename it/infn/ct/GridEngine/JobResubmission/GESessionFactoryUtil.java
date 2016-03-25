@@ -1,24 +1,27 @@
 package it.infn.ct.GridEngine.JobResubmission;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import it.infn.ct.GridEngine.Config.GridEngineConfig;
 
 
 public class GESessionFactoryUtil {
 	
-	//private static ServiceRegistry serviceRegistry;
-//	private static final SessionFactory sessionFactory;
 	private static SessionFactory sessionFactory;
+	private static final Logger logger = Logger.getLogger(GESessionFactoryUtil.class);
 	
 	static{
 		try{			
-			sessionFactory = new Configuration().configure().buildSessionFactory();
-			System.out.println("Using jdbc/gehibernatepool");
+			GridEngineConfig gec = GridEngineConfig.getInstance();
+			sessionFactory = new Configuration().setProperty("hibernate.connection.datasource", gec.getUserstrackingDatasource()).configure().buildSessionFactory();
+			logger.info("Using hibernate datasource: " + gec.toString());
 		}
 		catch(Throwable ex){
-			//System.err.println("Initial SessionFactory creation failed." + ex);
+			logger.info("Could not find hibernate datasource, using local connection parameters ...");
 			sessionFactory = new Configuration().configure("hibernateStandAlone.cfg.xml").buildSessionFactory();
-			System.out.println("Using local DB connection");
+			logger.info("Configured Hibernate local datasource");
 		}
 	}
 

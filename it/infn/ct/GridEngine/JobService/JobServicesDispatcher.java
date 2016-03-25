@@ -1183,11 +1183,16 @@ public class JobServicesDispatcher {
 			Context context = null;
 			try {
 				session = SessionFactory.createSession(false);
-				context = ContextFactory.createContext("UserPass");
-				context.setAttribute("UserID", username);
-				context.setAttribute("UserPass", password);
+				if (!password.equals("")) {
+					context = ContextFactory.createContext("UserPass");
+					context.setAttribute("UserID", username);
+					context.setAttribute("UserPass", password);
+				} else {
+					context = ContextFactory.createContext("SSH");
+					context.setAttribute(Context.USERID, username);
+				}
+				context.setVectorAttribute("BaseUrlIncludes", new String[]{"sftp://"});
 				context.setVectorAttribute("DataServiceAttributes", new String[]{"sftp.KnownHosts="});
-				
 				session.addContext(context);
 
 			} catch (Exception e) {
@@ -1202,9 +1207,10 @@ public class JobServicesDispatcher {
 				URL serviceURL = URLFactory.createURL(resourceManager);
 				service = JobFactory.createJobService(session, serviceURL);
 			} catch (Exception e) {
+				e.printStackTrace();
 				logger.error("Error in creating jobService...");
 				logger.error(e.toString());
-				logger.error("Cause :" + e.getCause());
+//				logger.error("Cause :" + e.getCause());
 				return null;
 			}
 

@@ -71,6 +71,14 @@ public class InfrastructureInfo {
 		UserProxy = proxy;
 	}
 
+	public InfrastructureInfo(String name, String middleware,
+			String authparam1, String resourcemanagerlist[]) {
+		Name = name;
+		Middleware = middleware;
+		UserName = authparam1;
+		ResourcemanagerList = resourcemanagerlist;
+	}
+		
 	/**
 	 * Constructs a {@link InfrastructureInfo} object initializing its attribute
 	 * with the given data.
@@ -508,6 +516,10 @@ public class InfrastructureInfo {
 	public String getName() {
 		return Name;
 	}
+	
+	public void setName(String name) {
+		Name = name;
+	}
 
 	/**
 	 * Returns the BDII host.
@@ -517,14 +529,25 @@ public class InfrastructureInfo {
 	public String getBDII() {
 		return BDII;
 	}
+	
+	public void setBDII(String bDII) {
+		BDII = bDII;
+	}
 
 	/**
 	 * Returns the list of enabled WMSes.
-	 * 
+	 * @deprecated
 	 * @return list of enabled WMSes.
 	 */
 	public String[] getWmsList() {
 		return ResourcemanagerList;
+	}
+	public String[] getResourcemanagerList() {
+		return ResourcemanagerList;
+	}
+
+	public void setResourcemanagerList(String[] resourcemanagerList) {
+		ResourcemanagerList = resourcemanagerList;
 	}
 
 	/**
@@ -535,6 +558,10 @@ public class InfrastructureInfo {
 	public String getUserProxy() {
 		return UserProxy;
 	}
+	
+	public void setUserProxy(String userProxy) {
+		UserProxy = userProxy;
+	}
 
 	/**
 	 * Returns the robot proxy host.
@@ -543,6 +570,10 @@ public class InfrastructureInfo {
 	 */
 	public String getETokenServer() {
 		return ETokenServer;
+	}
+	
+	public void setETokenServer(String eTokenServer) {
+		ETokenServer = eTokenServer;
 	}
 
 	/**
@@ -553,6 +584,10 @@ public class InfrastructureInfo {
 	public String getETokenServerPort() {
 		return ETokenServerPort;
 	}
+	
+	public void setETokenServerPort(String eTokenServerPort) {
+		ETokenServerPort = eTokenServerPort;
+	}
 
 	/**
 	 * Returns the robot proxy identifier.
@@ -561,6 +596,10 @@ public class InfrastructureInfo {
 	 */
 	public String getProxyId() {
 		return ProxyId;
+	}
+	
+	public void setProxyId(String proxyId) {
+		ProxyId = proxyId;
 	}
 
 	/**
@@ -571,6 +610,10 @@ public class InfrastructureInfo {
 	public String getVO() {
 		return VO;
 	}
+	
+	public void setVO(String vO) {
+		VO = vO;
+	}
 
 	/**
 	 * Returns the robot proxy roles.
@@ -579,6 +622,10 @@ public class InfrastructureInfo {
 	 */
 	public String getFQAN() {
 		return FQAN;
+	}
+	
+	public void setFQAN(String fQAN) {
+		FQAN = fQAN;
 	}
 
 	/**
@@ -589,6 +636,10 @@ public class InfrastructureInfo {
 	public String getSWTag() {
 		return SWTag;
 	}
+	
+	public void setSWTag(String sWTag) {
+		SWTag = sWTag;
+	}
 
 	/**
 	 * Returns the infrastructure middleware name.
@@ -597,6 +648,10 @@ public class InfrastructureInfo {
 	 */
 	public String getMiddleware() {
 		return Middleware;
+	}
+	
+	public void setMiddleware(String middleware) {
+		Middleware = middleware;
 	}
 
 	/**
@@ -607,6 +662,10 @@ public class InfrastructureInfo {
 	public String getKeystore() {
 		return Keystore;
 	}
+	
+	public void setKeystore(String keystore) {
+		Keystore = keystore;
+	}
 
 	/**
 	 * Returns the username.
@@ -616,6 +675,10 @@ public class InfrastructureInfo {
 	public String getUserName() {
 		return UserName;
 	}
+	
+	public void setUserName(String userName) {
+		UserName = userName;
+	}
 
 	/**
 	 * Returns the password.
@@ -624,6 +687,10 @@ public class InfrastructureInfo {
 	 */
 	public String getPassword() {
 		return Password;
+	}
+	
+	public void setPassword(String password) {
+		Password = password;
 	}
 
 	/**
@@ -635,6 +702,10 @@ public class InfrastructureInfo {
 		return CEList;
 	}
 	
+	public void setCEList(String[] cEList) {
+		CEList = cEList;
+	}
+	
 	/**
 	 * Returns the RFC flag.
 	 * 
@@ -642,6 +713,10 @@ public class InfrastructureInfo {
 	 */
 	public boolean getRFC() {
 		return RFC;
+	}
+	
+	public void setRFC(boolean rFC) {
+		RFC = rFC;
 	}
 
 }
