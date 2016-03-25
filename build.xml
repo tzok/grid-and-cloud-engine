@@ -38,8 +38,9 @@
 	</target>
 	<target name="build-jar">
 		<jar destfile="dist/jsaga-job-management-1.5.11.jar" basedir="bin/">
-			<manifest/>
+			<manifest />
 		</jar>
 	</target>
+	<target name="test" />
 	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
 </project>
