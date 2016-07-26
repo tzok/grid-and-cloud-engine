@@ -472,7 +472,8 @@ public class MultiInfrastructureJobSubmission {
 	 */
 	public void setUserEmail(String userEmail) {
 		if(!this.userEmail.equals("")){
-			this.userEmail.concat("|"+userEmail);
+			String tmp = this.userEmail;
+			this.userEmail = tmp + "|" +userEmail;
 		} else {
 			this.userEmail = userEmail;
 		}
@@ -486,7 +487,7 @@ public class MultiInfrastructureJobSubmission {
 	public void setSenderEmail(String senderEmail) {
 		if(!this.userEmail.equals("")){
 			String tmp = this.userEmail;
-			this.userEmail = senderEmail+"|"+tmp;
+			this.userEmail = senderEmail + "|" + tmp;
 		} else {
 			this.userEmail = senderEmail;
 		}

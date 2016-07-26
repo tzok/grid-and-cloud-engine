@@ -14,11 +14,11 @@ public class ActiveInteractions {
 	private String[] interactionInfos;
 	private Vector<String[]> subJobs;
 	
-	protected ActiveInteractions() {
+	public ActiveInteractions() {
 		super();
 	}
 
-	protected ActiveInteractions(String[] interactionInfos,
+	public ActiveInteractions(String[] interactionInfos,
 			Vector<String[]> subJobs) {
 		super();
 		this.interactionInfos = interactionInfos;
