@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.infn.ct</groupId>
+	<artifactId>grid-and-cloud-engine_M</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Grid and cloud engine</name>
+	<repositories>
+		<repository>
+			<id>CC-IN2P3 maven repository</id>
+			<url>http://maven.in2p3.fr/</url>
+		</repository>
+	</repositories>
+	<dependencies>
+
+<dependency>
+    <groupId>ge_threadpool</groupId>
+    <artifactId>ge_threadpool</artifactId>
+    <version>0.0.1</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/../grid-and-cloud-engine-threadpool/target/grid-and-cloud-engine-threadpool-0.0.1-SNAPSHOT.jar</systemPath>
+</dependency>
+
+
+
+
+		<!-- test -->
+		<dependency>
+			<groupId>org.ogf.saga</groupId>
+			<artifactId>saga-api-test</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<!-- core -->
+		<dependency>
+			<groupId>fr.in2p3.jsaga</groupId>
+			<artifactId>jsaga-engine</artifactId>
+			<version>1.1.1</version>
+			<classifier>config</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>fr.in2p3.jsaga</groupId>
+			<artifactId>jsaga-engine</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<!-- adaptors -->
+		<dependency>
+			<groupId>fr.in2p3.jsaga.poms</groupId>
+			<artifactId>jsaga-adaptors</artifactId>
+			<version>1.1.1</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>3.2.3.ga</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+
+	</dependencies>
+</project>
