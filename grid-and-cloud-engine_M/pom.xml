@@ -12,17 +12,13 @@
 		</repository>
 	</repositories>
 	<dependencies>
-
-<dependency>
-    <groupId>ge_threadpool</groupId>
-    <artifactId>ge_threadpool</artifactId>
-    <version>0.0.1</version>
-    <scope>system</scope>
-    <systemPath>${project.basedir}/../grid-and-cloud-engine-threadpool/target/grid-and-cloud-engine-threadpool-0.0.1-SNAPSHOT.jar</systemPath>
-</dependency>
-
-
-
+                <dependency>
+                    <groupId>ge_threadpool</groupId>
+                    <artifactId>ge_threadpool</artifactId>
+                    <version>0.0.1</version>
+                    <scope>system</scope>
+                    <systemPath>${project.basedir}/../grid-and-cloud-engine-threadpool/target/grid-and-cloud-engine-threadpool-0.0.1-SNAPSHOT.jar</systemPath>
+                </dependency>
 
 		<!-- test -->
 		<dependency>
@@ -62,12 +58,18 @@
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
 		</dependency>
+                <!-- Using instead cglib-nodep
 		<dependency>
 			<groupId>asm</groupId>
 			<artifactId>asm</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-
+                -->
+                <dependency>
+                        <groupId>cglib</groupId>
+                        <artifactId>cglib-nodep</artifactId>
+                        <version>2.2.2</version>
+                </dependency>
 	</dependencies>
 	<build>
             <plugins>
