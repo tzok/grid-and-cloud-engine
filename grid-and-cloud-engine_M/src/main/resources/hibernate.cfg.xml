@@ -3,8 +3,8 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-    <session-factory name="java:hibernate/SessionFactory">
-<!--        	<property name="connection.datasource">jdbc/gehibernatepool</property> -->
+    <session-factory>
+        <!-- <property name="connection.datasource">jdbc/gehibernatepool</property> -->
        
         <!-- hibernate dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
@@ -22,7 +22,7 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 		
-		<!-- ############################################ -->
+	<!-- ############################################ -->
         <!-- # mapping files with external dependencies # -->
         <!-- ############################################ -->
         <mapping resource="it/infn/ct/GridEngine/JobResubmission/GEJobDescription.hbm.xml" />
