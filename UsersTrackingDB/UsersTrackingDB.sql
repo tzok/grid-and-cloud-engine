@@ -3,15 +3,14 @@ DROP DATABASE IF EXISTS userstracking;
 CREATE DATABASE userstracking;
 
 CREATE USER 'tracking_user'@'localhost';
-ALTER USER 'tracking_user'@'localhost' IDENTIFIED BY 'usertracking'
+ALTER USER 'tracking_user'@'localhost' IDENTIFIED BY 'usertracking';
 GRANT ALL PRIVILEGES 
 ON userstracking.* 
 TO 'tracking_user'@'localhost'
 WITH GRANT OPTION;
 
 CREATE USER 'tracking_user'@'%';
-ALTER USER 'tracking_user'@'%' IDENTIFIED BY 'usertracking'
- IDENTIFIED BY 'usertracking'
+ALTER USER 'tracking_user'@'%' IDENTIFIED BY 'usertracking';
 GRANT ALL PRIVILEGES 
 ON userstracking.* 
 TO 'tracking_user'@'%'
