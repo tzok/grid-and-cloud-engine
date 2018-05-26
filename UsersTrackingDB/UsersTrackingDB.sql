@@ -2,20 +2,21 @@ DROP DATABASE IF EXISTS userstracking;
 
 CREATE DATABASE userstracking;
 
-GRANT ALL PRIVILEGES
-ON userstracking.*
+CREATE USER 'tracking_user'@'localhost';
+ALTER USER 'tracking_user'@'localhost' IDENTIFIED BY 'usertracking';
+GRANT ALL PRIVILEGES 
+ON userstracking.* 
 TO 'tracking_user'@'localhost'
-IDENTIFIED BY 'usertracking'
 WITH GRANT OPTION;
 
-GRANT ALL PRIVILEGES
-ON userstracking.*
+CREATE USER 'tracking_user'@'%';
+ALTER USER 'tracking_user'@'%' IDENTIFIED BY 'usertracking';
+GRANT ALL PRIVILEGES 
+ON userstracking.* 
 TO 'tracking_user'@'%'
-IDENTIFIED BY 'usertracking'
 WITH GRANT OPTION;
 
 USE userstracking;
-
 
 --
 -- Table structure for table `ActiveGridInteractions`
