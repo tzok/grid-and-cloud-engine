@@ -3,18 +3,14 @@ DROP DATABASE IF EXISTS userstracking;
 CREATE DATABASE userstracking;
 
 CREATE USER 'tracking_user'@'localhost';
-ALTER USER 'tracking_user'@'localhost' IDENTIFIED BY 'usertracking';
-GRANT ALL PRIVILEGES 
-ON userstracking.* 
-TO 'tracking_user'@'localhost'
-WITH GRANT OPTION;
+-- ALTER USER 'tracking_user'@'localhost' IDENTIFIED BY 'usertracking';
+SET PASSWORD FOR 'tracking_user'@'localhost' = PASSWORD('usertracking');
+GRANT ALL PRIVILEGES ON userstracking.* TO 'tracking_user'@'localhost' WITH GRANT OPTION;
 
 CREATE USER 'tracking_user'@'%';
-ALTER USER 'tracking_user'@'%' IDENTIFIED BY 'usertracking';
-GRANT ALL PRIVILEGES 
-ON userstracking.* 
-TO 'tracking_user'@'%'
-WITH GRANT OPTION;
+-- ALTER USER 'tracking_user'@'%' IDENTIFIED BY 'usertracking';
+SET PASSWORD FOR 'tracking_user'@'%' = PASSWORD('usertracking');
+GRANT ALL PRIVILEGES ON userstracking.* TO 'tracking_user'@'%' WITH GRANT OPTION;
 
 USE userstracking;
 
