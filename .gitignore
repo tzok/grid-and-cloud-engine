@@ -1,1 +1,4 @@
-/.project
+*.iml
+.project
+pom.xml.bak
+target
