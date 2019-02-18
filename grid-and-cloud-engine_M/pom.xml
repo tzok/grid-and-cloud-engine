@@ -22,11 +22,6 @@
     </dependency>
 
     <dependency>
-      <groupId>fr.in2p3.jsaga</groupId>
-      <artifactId>jsaga-engine</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>fr.in2p3.jsaga.poms</groupId>
       <artifactId>jsaga-adaptors</artifactId>
       <version>1.1.2</version>
