@@ -26,6 +26,16 @@
       <artifactId>jsaga-adaptors</artifactId>
       <version>1.1.2</version>
       <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <groupId>fr.in2p3.jsaga.adaptor</groupId>
+          <artifactId>jsaga-adaptor-irods</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.irods.jargon</groupId>
+          <artifactId>jargon-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
